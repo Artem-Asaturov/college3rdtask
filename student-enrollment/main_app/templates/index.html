@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Student Enrollment</title>
+</head>
+<body>
+    <h1>Student Enrollment</h1>
+
+    <h2>Available Courses</h2>
+    <form>
+        <label for="courses">Choose a course:</label>
+        <select id="courses" name="courses">
+            {% for course in courses %}
+                <option value="{{ course }}">{{ course }}</option>
+            {% endfor %}
+        </select>
+        <label for="student_name">Student Name:</label>
+        <input type="text" id="student_name" name="student_name" required>
+        <button type="button" onclick="enrollStudent()">Enroll Student</button>
+    </form>
+
+    <h2>Enrolled Students</h2>
+    <ul id="enrolled_students">
+        {% for student in students %}
+            <li>{{ student.name }} - {{ student.course }}</li>
+        {% endfor %}
+    </ul>
+
+    <script>
+        function enrollStudent() {
+            var course = document.getElementById('courses').value;
+            var studentName = document.getElementById('student_name').value;
+
+            if (studentName.trim() === "") {
+                alert("Please enter a student name.");
+                return;
+            }
+
+            var enrolledStudentsList = document.getElementById('enrolled_students');
+
+            var listItem = document.createElement('li');
+            listItem.textContent = studentName + " - " + course;
+            enrolledStudentsList.appendChild(listItem);
+        }
+    </script>
+</body>
+</html>
